@@ -6,7 +6,7 @@ def index(request):
 
 
 def about(request):
-    return HttpResponse("Under development")
+    return render(request, 'shop/about.html')
 
 
 def contact(request):
