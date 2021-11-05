@@ -5,15 +5,19 @@ from math import ceil
 
 def index(request):
 
-    products = Product.objects.all()
+    # products= Product.objects.all()
+    allProds=[]
+    catprods= Product.objects.values('category', 'id')
+    cats= {item["category"] for item in catprods}
 
-    n = len(products)
+    for cat in cats:
+        prod=Product.objects.filter(category=cat)
+        n = len(prod)
+        nSlides = ceil(n / 4)
+        allProds.append([prod, range(1, nSlides), nSlides])
 
-    num_of_slide = ceil(n/4)
-
-    params = {'num_of_slide': num_of_slide, 'range': range(1,num_of_slide), 'product': products}
-
-    return render(request, 'shop/index.html', params)
+    params={'allProds':allProds }
+    return render(request,"shop/index.html", params)
 
 
 def about(request):

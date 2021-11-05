@@ -13,4 +13,4 @@ class Product(models.Model):
     pub_date = models.DateField()
 
     def __str__(self):
-        return self.product_name
+        return self.product_name + ' (' + self.category + ')'
