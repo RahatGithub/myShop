@@ -25,20 +25,20 @@ def about(request):
 
 
 def contact(request):
-    return HttpResponse("Under development")
+    return render(request, 'shop/contact.html')
 
 
 def search(request):
-    return HttpResponse("Under development")
+    return render(request, 'shop/search.html')
 
 
 def tracker(request):
-    return HttpResponse("Under development")
+    return render(request, 'shop/tracker.html')
 
 
 def productView(request):
-    return HttpResponse("Under development")
+    return render(request, 'shop/prodView.html')
 
 
 def checkout(request):
-    return HttpResponse("Under development")
+    return render(request, 'shop/checkout.html')
