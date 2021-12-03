@@ -22,39 +22,41 @@
         <div class="my-4">
             <ul class="list-group" id="items">
             	Enter your order Id and Email and click Track Order to find details about your order!
+                <!-- Order status/history will be shown here -->
             </ul>
         </div>
     </div>
     <div class="col my-4">
         <h2>Your Order Details</h2>
         <div class="my-4">
-            <ul class="list-group" id="citems">
-            	
+            <ul class="list-group mb-3" id="citems">
+            	<!-- cart items will be shown here -->
             </ul>
+            <h6><span id="amount"></span></h6>
         </div>
     </div>
 </div>
 {% endblock %}
 {% block js %}
 <script>
-$('#trackerForm').submit(function(event) {
-    $('#items').empty();
-    var formData = {
-        'orderId': $('input[name=orderId]').val(),
-        'email': $('input[name=email]').val(),
-        'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val()
-    };
-    $.ajax({
-            type: 'POST',
-            url: '/shop/tracker/',
-            data: formData,
-            encode: true
+    $('#trackerForm').submit(function(event) {
+        $('#items').empty();
+        var formData = {
+            'orderId': $('input[name=orderId]').val(),
+            'email': $('input[name=email]').val(),
+            'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val()
+        };
+        $.ajax({
+                type: 'POST',
+                url: '/shop/tracker/',
+                data: formData,
+                encode: true
         })
         .done(function(data) {
             data = JSON.parse(data)
             updates = data[0];
             if (updates.length > 0 & updates != {}) {
-                for (i = 0; i < updates.length; i++) {
+                for (i = updates.length-1; i >= 0; i--) {
                     let text = updates[i]['text'];
                     let time = updates[i]['time'];
                     mystr = `<li class="list-group-item d-flex justify-content-between align-items-center">
@@ -63,27 +65,31 @@ $('#trackerForm').submit(function(event) {
                 </li>`
                     $('#items').append(mystr);
                 }
-            } else {
-            	mystr = `<li class="list-group-item d-flex justify-content-between align-items-center">
+            } 
+            else {
+                mystr = `<li class="list-group-item d-flex justify-content-between align-items-center">
                     Sorry, We are not able to fetch this order id and email. Make sure to type correct order Id and email</li>`
-            	$('#items').append(mystr);
+                $('#items').append(mystr);
             }
 
-        //Fill in the order details
-        cart = JSON.parse(data[1]);
-        console.log(cart);
-        for (item in cart) {
-        let name = cart[item][1];
-        let qty = cart[item][0];
-        mystr = `<li class="list-group-item d-flex justify-content-between align-items-center">
-                    ${name}
-                    <span class="badge badge-primary badge-pill">${qty}</span>
-                </li>`
-        $('#citems').append(mystr);
-        }
-
+            //Fill in the order details
+            cart = JSON.parse(data[1]);
+            let amount = 0;
+            for (item in cart) {
+                let qty = cart[item][0];
+                let name = cart[item][1];
+                let price = cart[item][2];
+                amount += (price*qty);
+                mystr = `<li class="list-group-item d-flex justify-content-between align-items-center">
+                            ${name} (BDT. ${price})
+                            <span class="badge badge-primary badge-pill">${qty}</span>
+                        </li>`
+                $('#citems').append(mystr);
+            }
+            myStr = `Total: BDT ${amount}`;
+            $('#amount').append(myStr);
         });
-    event.preventDefault();
-});
+        event.preventDefault();
+    });
 </script>
 {% endblock %}

@@ -18,6 +18,7 @@
         <h2>Step 2 - Enter Address & Other Details:</h2>
         <form method="post" action="/shop/checkout/">{% csrf_token %}
             <input type="hidden" name="itemsJson" id="itemsJson"> <!--This is a hidden input that we will send as a JSON file-->
+            <input type="hidden" name="amount" id="amount"> <!--This is a hidden input that we will send as a JSON file-->
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="inputname">Name</label>
@@ -96,6 +97,8 @@ if ($.isEmptyObject(cart)) {
         localStorage.clear();
         document.location = "/shop";
     {% endif %}
+
+    $('#amount').val($('#totalPrice').html())  //Setting the value of 'totalPrice' to 'amount' 
 
 </script>
 {% endblock %}

@@ -30,6 +30,7 @@ class Orders(models.Model):
     order_id = models.AutoField(primary_key=True)
     items_json = models.CharField(max_length=5000)
     name = models.CharField(max_length=90)
+    amount=models.IntegerField(default=0)
     email = models.CharField(max_length=111)
     address = models.CharField(max_length=111)
     city = models.CharField(max_length=111)
@@ -45,7 +46,8 @@ class OrderUpdate(models.Model):
     update_id= models.AutoField(primary_key=True)
     order_id= models.IntegerField(default="")
     update_desc= models.CharField(max_length=5000)
-    timestamp= models.DateField(auto_now_add= True)
+    # timestamp= models.DateField(auto_now_add= True)
+    timestamp= models.DateTimeField(auto_now_add= True)
 
     def __str__(self):
         return "ID: {}, Name: {}, Status: {}".format(self.order_id, Orders.objects.filter(order_id=self.order_id).values_list('name', flat=True).first(), self.update_desc)
