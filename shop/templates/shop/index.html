@@ -2,41 +2,42 @@
 {% block css %}
 .col-md-3
 {
-display: inline-block;
-margin-left:-4px;
+    display: inline-block;
+    margin-left:-4px;
 }
 .carousel-indicators .active {
-background-color: blue;
+    background-color: blue;
 }
 .col-md-3 img{
-width: 170px;
-height: 200px;
+    width: 200px;
+    height: 200px;
 }
 body .carousel-indicator li{
-background-color: blue;
+    background-color: blue;
 }
 body .carousel-indicators{
-bottom: 0;
+    bottom: -40px;
 }
 body .carousel-control-prev-icon,
 body .carousel-control-next-icon{
-background-color: blue;
+    background-color: blue;
 }
 .carousel-control-prev,
 .carousel-control-next{
-top: auto;
-bottom: auto;
-padding-top: 222px;
+    top: auto;
+    bottom: auto;
+    padding-top: 222px;
 }
 body .no-padding{
-padding-left: 0,
-padding-right: 0;
+    padding-left: 0,
+    padding-right: 0;
 }
 {% endblock %}
 {% block body %}
 {% load static %}
 <div class="container">
-    <!--Slideshow starts here -->
+
+    <!--Products slideshow starts here -->
     {% for product, range, nSlides in allProds %}
     <h5 class="my-4">Flash Sale On {{product.0.category}} - Recommended Items</h5>
     <div class="row">
@@ -81,8 +82,10 @@ padding-right: 0;
         </a>
     </div>
     {% endfor %}
+
 </div>
 {% endblock %}
+
 {% block js %}
 <script>
 // Find out the cart items from localStorage
@@ -114,7 +117,7 @@ updatePopover(cart);
 
 function updatePopover(cart) {
     var popStr = "";
-    popStr = popStr + "<h5> Cart for your items in my shopping cart </h5><div class='mx-2 my-2'>";
+    popStr = popStr + "<h5> Your Shopping Cart </h5><div class='mx-2 my-2'>";
     var i = 1;
     for (var item in cart) {
         popStr = popStr + "<b>" + i + "</b>. ";

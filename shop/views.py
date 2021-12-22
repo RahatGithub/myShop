@@ -1,11 +1,10 @@
 from django.shortcuts import render
+from django.http import HttpResponse
 from .models import Product, Contact, Orders, OrderUpdate
 from math import ceil
 import json
 
 # Create your views here.
-from django.http import HttpResponse
-
 
 def index(request):
     allProds = []
