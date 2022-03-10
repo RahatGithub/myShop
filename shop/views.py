@@ -31,7 +31,6 @@ def search(request):
         nSlides = ceil(n/4) 
         if not n == 0:
             allProds.append([prod, range(1, nSlides), nSlides])
-    
     params = {'allProds':allProds, 'msg':'', 'query':query}
     if len(allProds) == 0 or len(query) < 3: 
         params = {'msg':"Please make sure to enter relevant search query", 'query':query}
